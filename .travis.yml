@@ -13,7 +13,17 @@ before_script:
 
 script:
   - docker --version 
-  - docker build -t udagram-api-feed .
+  - docker build -t udagram-api-feed \
+    --build-arg POSTGRES_USERNAME_ARG=$POSTGRES_USERNAME_ARG \
+    --build-arg POSTGRES_PASSWORD_ARG=$POSTGRES_PASSWORD_ARG \
+    --build-arg POSTGRES_HOST_ARG=$POSTGRES_HOST_ARG
+    --build-arg POSTGRES_DB_ARG=$POSTGRES_DB_ARG \
+    --build-arg AWS_BUCKET_ARG=$AWS_BUCKET_ARG \
+    --build-arg AWS_REGION_ARG=$AWS_REGION_ARG \
+    --build-arg AWS_PROFILE_ARG=$AWS_PROFILE_ARG \
+    --build-arg JWT_SECRET_ARG=$JWT_SECRET_ARG \
+    --build-arg PORT_ARG=$PORT_ARG \
+    .
   - docker tag udagram-api-feed jazracherif/udagram-api-feed:latest
 
 after_success:
