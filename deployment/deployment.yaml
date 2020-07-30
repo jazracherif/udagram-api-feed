@@ -18,4 +18,4 @@ spec:
       - name: udagram-api-feed
         images: jazracherif/udagram-api-feed
         ports:
-          containerPort: 80
+          containerPort: 8080

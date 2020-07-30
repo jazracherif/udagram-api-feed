@@ -36,7 +36,7 @@ RUN npm install
 COPY . .
 
 # bind the port that the image will use
-EXPOSE 8080
+EXPOSE $PORT_ARG
 
 # define startup behavior
 CMD ["npm", "run", "dev"]
