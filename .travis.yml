@@ -1,32 +1,33 @@
 language: node_js
 node_js:
-  - 13
-
+- 13
 services:
-  - docker
-
+- docker
 install:
-  - echo "nothing to install"
-
+- pip install --user awscli
 before_script:
-  - echo "no before scripts actions"
-
+- echo "no before scripts actions"
 script:
-  - docker --version 
-  - |
-    docker build -t udagram-api-feed \
-    --build-arg POSTGRES_USERNAME_ARG=$POSTGRES_USERNAME_ARG \
-    --build-arg POSTGRES_PASSWORD_ARG=$POSTGRES_PASSWORD_ARG \
-    --build-arg POSTGRES_HOST_ARG=$POSTGRES_HOST_ARG \
-    --build-arg POSTGRES_DB_ARG=$POSTGRES_DB_ARG \
-    --build-arg AWS_BUCKET_ARG=$AWS_BUCKET_ARG \
-    --build-arg AWS_REGION_ARG=$AWS_REGION_ARG \
-    --build-arg AWS_PROFILE_ARG=$AWS_PROFILE_ARG \
-    --build-arg JWT_SECRET_ARG=$JWT_SECRET_ARG \
-    --build-arg PORT_ARG=$PORT_ARG \
-    .
-  - docker tag udagram-api-feed jazracherif/udagram-api-feed:latest
-
+- docker --version
+- |
+  docker build -t udagram-api-feed \
+  --build-arg POSTGRES_USERNAME_ARG=$POSTGRES_USERNAME_ARG \
+  --build-arg POSTGRES_PASSWORD_ARG=$POSTGRES_PASSWORD_ARG \
+  --build-arg POSTGRES_HOST_ARG=$POSTGRES_HOST_ARG \
+  --build-arg POSTGRES_DB_ARG=$POSTGRES_DB_ARG \
+  --build-arg AWS_BUCKET_ARG=$AWS_BUCKET_ARG \
+  --build-arg AWS_REGION_ARG=$AWS_REGION_ARG \
+  --build-arg AWS_PROFILE_ARG=$AWS_PROFILE_ARG \
+  --build-arg JWT_SECRET_ARG=$JWT_SECRET_ARG \
+  --build-arg PORT_ARG=$PORT_ARG \
+  .
+- docker tag udagram-api-feed:latest 998443328643.dkr.ecr.us-east-1.amazonaws.com/udagram-api-feed:latest
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push jazracherif/udagram-api-feed
+- aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin
+  998443328643.dkr.ecr.us-east-1.amazonaws.com
+- docker push 998443328643.dkr.ecr.us-east-1.amazonaws.com/udagram-api-feed:latest
+
+env:
+  global:
+  - secure: UYzBjUIavdqOF5I4X9Hv/+PA7mTERS022Z98AxqeVZBdTgXMfNLdebMywAmBAPpcKLmUOeL09sBaxx0AClbj9xzh8ABmmNk6KLA+cyUB5KA3/mvE9QM+LnVKKg3RyLyqyi4gFRjcjjKUgZXZ73VNrbcTjYs2c/73aoP1Dbo1InalyJPKN2PtkfZ0/WM6PZGIQo2LlGsfnM41Td9l+x4HECNe65/NtmiO0JGTSQNXgCDgSdz+34mibCrVrBL+XdpOhpPueAC4Kuba6/oweLKi+Hm51MuMfWLA55frhLFvXKmfMKxxCYfuTr8NuGuVLMmzmw8yyhP6agegm5aVvRm6AX1VLRyWr+qLUmTtK2hZ8Jj7LilTAokTKrIDkVHi7CknC7aUcEPODPSIzNFFlyKykwmCOYDTAsn4FabKh0tof+T3CoJa63undUbxu9SsyUEdNsqwML9eWXy6nSXHQ8W9fv4bHet2tiIpf8VvaDUYCYmGPsY7WT9o9ySWKmS6DX5xY2BfeP4sxY9Budt35zeBV3MydsHccaRSFCpN0XIwZsBCwxR0lELOKHJW78j+0ncIV6PRBZsDs4/auBRirh/jOzGiy6oP7UnwNndDB0AWeWlemKpqdmN+aEaIajqHmnDsIrQHf/ERWvJxB0XCU8AWDwXFG1U+ubkyuzCYgbiV8dg=
+  - secure: iFt8BqJ8NTnWyKciMRcOnVhaY/HzwTYgg6IVvNA+cnA7BAR9h6oQPNrNnphmidE6gquJe8QkGAb+K7A1lnVc5ohiJf/bTGhSWUDMkAet3XbS1HldkEGFdXEUgu0J6NRmPpF5OvGj/BJpXqDSWBoqMyTJbT9yK9ikjVDhxtE49MCuYqat9y/q+2qkmlrccI1m79kjUQqFMPzW7fOiqdGvKN7qy46d7V68UGzz7Ivg7dmlmB7rxSHRwvYWXvZrnRIoI5ABCRw8w8YKzBCdjKCv9Q+y8/gmIq22ufwOycyUBuFxHax0xqqkQ23KLGIXNP6poCvN0vBSeBhWiFkjkfvRkgf40zSLSlIF+4JTHjQhrwYVj36mr4RWE1LDK83hK01hqqT9wUWuZS4tKxKb87yX7mt1B0GuUn3gwdCtI6qf8sB3qvHbNuH6zfeBzcqY18B7hAue9O6ee8opzYfl27tN2YUxAQWhECitX1SXxft7GHm+mkXl2YBl6U3Zx/bLtZ1BIVfCWOVeQpWPFnyJY//YqKxUNaqeenJd7lgM1B7ErbLn7b2uhL4awdhI3aGVi7DdYIS5wRTullpXE/QKvfpEUpA/rgSruvDo3nYH/hSO1WLxegFS2e09y6KOZVEzfc9BUZ6soO3qzLnwOLlOqPO/PrMsw0J/10plSErjO2K48n8=
