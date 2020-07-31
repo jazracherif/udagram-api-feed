@@ -20,6 +20,7 @@ script:
   --build-arg AWS_PROFILE_ARG=$AWS_PROFILE_ARG \
   --build-arg JWT_SECRET_ARG=$JWT_SECRET_ARG \
   --build-arg PORT_ARG=$PORT_ARG \
+  --build-arg URL_ARG=$URL_ARG \
   .
 - docker tag udagram-api-feed:latest 998443328643.dkr.ecr.us-east-1.amazonaws.com/udagram-api-feed:latest
 after_success:
