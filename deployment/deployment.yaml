@@ -5,17 +5,17 @@ metadata:
   labels: 
     app: udagram-api-feed
 spec:
-  repllicas: 1
+  replicas: 1
   selector:
     matchLabels:
       app: udagram-api-feed
   template:
-    metadate:
+    metadata:
       labels:
         app: udagram-api-feed
     spec:
       containers:
       - name: udagram-api-feed
-        images: jazracherif/udagram-api-feed
+        image: 998443328643.dkr.ecr.us-east-1.amazonaws.com/udagram-api-feed:latest
         ports:
-          containerPort: 8080
+          - containerPort: 8080
